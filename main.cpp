@@ -93,7 +93,6 @@ int main()
 	int i,j,k;
 	FILE *fp;           //¶ÁÈëÎÄ¼ş
 	fp=fopen("tuoputu.txt","r");
-
 	fscanf(fp,"%d",&i);
 	for(k=0;k<i;k++)
 	{
