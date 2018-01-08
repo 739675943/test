@@ -92,8 +92,9 @@ int main()
 {
 	int i,j,k;
 	FILE *fp;           //读入文件
-        printf("我的名字是胡侠伟\n");
+        printf("我的名字叫胡康");
 	fp=fopen("tuoputu.txt","r");
+
 	fscanf(fp,"%d",&i);
 	for(k=0;k<i;k++)
 	{
