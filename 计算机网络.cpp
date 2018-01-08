@@ -96,6 +96,7 @@ int main()
 //	int a[MaxSize];
   //  RowColWeight rcw[100];
     printf("我的名字");
+    printf("我的名字叫");
 	fp=fopen("tuoputu10.txt","r");
 
 	fscanf(fp,"%d",&i);
