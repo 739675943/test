@@ -41,7 +41,7 @@ void GraphInitiate(AdjMGraph *G)
 
 
 
-//在带权有向图G中插入顶点vertex。如果图中已经有顶点vertex,则图不变。
+//在带权有向图G中插入顶点vertex。如果图中已经有顶点vertex,则图不变
 void InsertVertex(AdjMGraph *G,DataType vertex)
 {
 	//if(IsVertex(G,vertex)<0)
@@ -52,11 +52,9 @@ void InsertVertex(AdjMGraph *G,DataType vertex)
 		}
 }
 
-/* 在带权有向图G中插入一条第v1个顶点指向第v2个顶点，权值为weight的有向边 
-* 如果v1和v2有一个不是图中的顶点，则图不变；如果v1和v2相等，则图不变
-* 如果图已经包含该边，则边的权值更改为新的权值
-上面插入的是有向边，我们插入无向边的时候可以进行两次的有向边的插入
-*/
+/* 在带权有向图G中插入一条第v1个顶点指向第v2个顶点，权值为weight的有向边
+如果v1和v2有一个不是图中的顶点，则图不变；如果v1和v2相等，则图不变
+如果图已经包含该边，则边的权值更改为新的权值*/
 void InsertEdge(AdjMGraph *G,int v1,int v2,int weight)
 {
 	DataType x;
@@ -76,8 +74,7 @@ void InsertEdge(AdjMGraph *G,int v1,int v2,int weight)
 
 
 
-// 在带权有向图G中删除一条第v1个顶点指向第v2个顶点的边。
-
+// 在带权有向图G中删除一条第v1个顶点指向第v2个顶点的边
 void DeleteEdge(AdjMGraph *G,int v1,int v2)
 {
 	
@@ -106,12 +103,12 @@ void DeleteVertex(AdjMGraph *G,int v)
 		   }
 		   else 
 		   { 
+			   
 				   for(j=0,i=m3;j<G->vertices.size;j++)
 				   {
                        G->edge[j][i]=MaxWeight;
 
 				   }
-
 					  for(i=m3,j=0;j<G->vertices.size;j++)
 						 G->edge[i][j]=MaxWeight;
 		   }
@@ -171,17 +168,15 @@ void CreatGraph(AdjMGraph *G,DataType v[],int n,RowColWeight W[],int e)
 	for(k=0;k<e;k++)
         InsertEdge(G,W[k].row,W[k].col,W[k].weight);
 }
-
-
 void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
-/*带权图G从下标0顶点到其它顶点的最短距离distance*/
-/*和最短路径上顶点前驱下标path*/
+/*带权图G从下标0顶点到其它顶点的最短距离distance
+和最短路径上顶点前驱下标path*/
 { 
 	int n = G->vertices.size;
-	int *S = (int *)malloc(sizeof(int)*n);
+	int *S = (int *)malloc(sizeof(int)*n); //S数组
 	int minDis, i, j, u;
     	FILE *fp;  
-	//初始化
+	/*初始化*/
 	for(i = 0; i < n; i ++)
 	{ 
 		distance[i] = G->edge[v0][i];
@@ -191,7 +186,7 @@ void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
 		else path[i] = -1;
 	}
 	S[v0] = 1;
-	/*在当前还未找到最短路径的顶点集中选取具有最短距离的顶点u*/
+	//在当前还未找到最短路径的顶点集中选取具有最短距离的顶点u
 	for(i = 1; i < n; i ++)
 	{ 
 		minDis = MaxWeight;
@@ -201,10 +196,10 @@ void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
 				u = j;
 				minDis = distance[j];
 			}
-			/*当已不再存在路径时算法结束*/
+			//当已不再存在路径时算法结束
 			if(minDis == MaxWeight) return;
-			S[u] = 1; /*标记顶点u已从集合T加入到集合S中*/
-			/*修改从v0到其它顶点的最短距离和最短路径*/
+			S[u] = 1; //标记顶点u已从集合T加入到集合S中
+			//修改从v0到其它顶点的最短距离和最短路径
 			for(j = 0; j < n; j++)
 				if(S[j] == 0 && G->edge[u][j] < MaxWeight &&
 					distance[u] + G->edge[u][j] < distance[j])

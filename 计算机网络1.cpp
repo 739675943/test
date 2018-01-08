@@ -92,9 +92,7 @@ int main()
 {
 	int i,j,k;
 	FILE *fp;           //读入文件
-        printf("我的名字是");
-	fp=fopen("tuoputu10.txt","r");
-
+	fp=fopen("tuoputu.txt","r");
 	fscanf(fp,"%d",&i);
 	for(k=0;k<i;k++)
 	{
