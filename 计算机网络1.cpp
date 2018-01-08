@@ -90,9 +90,13 @@ void Insertedge()
 
 int main()
 {
+//	AdjMGraph g1;
 	int i,j,k;
 	FILE *fp;           //读入文件
-	fp=fopen("tuoputu10.txt","r");
+//	int a[MaxSize];
+  //  RowColWeight rcw[100];
+	printf("我的名字是胡康\n");
+	fp=fopen("tuoputu.txt","r");
 
 	fscanf(fp,"%d",&i);
 	for(k=0;k<i;k++)
