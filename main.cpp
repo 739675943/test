@@ -48,7 +48,7 @@ void putList()
 {
 	 int i,j;
 	 int distance[9],path[9];
-     printf("请输入你要生成的路由表的起始路由器是第几个路由器v\n");
+     printf("请输入你要生成的路由表的起始路由器是第几个路由器\n");
 	 scanf("%d",&i);
 	 i--;
 	 Dijkstra(&g1,i,distance,path);
