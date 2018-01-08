@@ -16,7 +16,7 @@ typedef struct
     int weight;  //权值
 }RowColWeight;//边信息结构体定义
 
-//初始化
+//置带权有向图G为空图
 void GraphInitiate(AdjMGraph *G)
 {
 	int i,j;
@@ -41,7 +41,7 @@ void GraphInitiate(AdjMGraph *G)
 
 
 
-//在带权有向图G中插入顶点vertex
+//在带权有向图G中插入顶点vertex。如果图中已经有顶点vertex,则图不变。
 void InsertVertex(AdjMGraph *G,DataType vertex)
 {
 	//if(IsVertex(G,vertex)<0)
@@ -52,8 +52,11 @@ void InsertVertex(AdjMGraph *G,DataType vertex)
 		}
 }
 
-// 在带权有向图G中插入一条第v1个顶点指向第v2个顶点，权值为weight的有向边 
-
+/* 在带权有向图G中插入一条第v1个顶点指向第v2个顶点，权值为weight的有向边 
+* 如果v1和v2有一个不是图中的顶点，则图不变；如果v1和v2相等，则图不变
+* 如果图已经包含该边，则边的权值更改为新的权值
+上面插入的是有向边，我们插入无向边的时候可以进行两次的有向边的插入
+*/
 void InsertEdge(AdjMGraph *G,int v1,int v2,int weight)
 {
 	DataType x;
@@ -73,7 +76,7 @@ void InsertEdge(AdjMGraph *G,int v1,int v2,int weight)
 
 
 
-// 在带权有向图G中删除一条第v1个顶点指向第v2个顶点的边
+// 在带权有向图G中删除一条第v1个顶点指向第v2个顶点的边。
 
 void DeleteEdge(AdjMGraph *G,int v1,int v2)
 {
@@ -103,17 +106,17 @@ void DeleteVertex(AdjMGraph *G,int v)
 		   }
 		   else 
 		   { 
-
 				   for(j=0,i=m3;j<G->vertices.size;j++)
 				   {
                        G->edge[j][i]=MaxWeight;
 
 				   }
+
 					  for(i=m3,j=0;j<G->vertices.size;j++)
 						 G->edge[i][j]=MaxWeight;
 		   }
 }
-
+//在带权有向图G中取第v个顶点的第一个邻接顶点，如果这样的邻接顶点存在，则返回该顶点在顶点顺序表的序号，否则返回-1
 int GetFirstVex(AdjMGraph G,int v)
 {
     int col;DataType x;
@@ -125,12 +128,14 @@ int GetFirstVex(AdjMGraph G,int v)
         exit(1);
 	}
 	
+	//寻找邻接矩阵v行中从最左开始第一个值非零且非无穷大的权值对应的顶点
 	for(col=0;col<G.vertices.size;col++)
         if(G.edge[v][col]>0 && G.edge[v][col] < MaxWeight) 
 			return col;
 		return -1; 
 }
 
+//在带权有向图G中取第v1个顶点的继邻接结点第v2个顶点之后的下一个邻接结点
 int GetNextVex(AdjMGraph G,int v1,int v2)
 {
     int col;DataType x;
@@ -145,11 +150,14 @@ int GetNextVex(AdjMGraph G,int v1,int v2)
 		printf("v2不是v1的邻接顶点\n");
         exit(1);
 	}
+	//寻找邻接矩阵v行中从第v2+1列开始的第一个值非零且非无穷大的权值对应的顶点
 	for(col=v2+1;col<G.vertices.size;col++)
         if(G.edge[v1][col]>0 && G.edge[v1][col]<MaxWeight) 
 			return col;
         return -1;
-}1
+}
+
+//创建有向图G，通过在空图G中插入n个顶点和e条边实现
 void CreatGraph(AdjMGraph *G,DataType v[],int n,RowColWeight W[],int e)
 {
 	int i,k;
@@ -165,15 +173,15 @@ void CreatGraph(AdjMGraph *G,DataType v[],int n,RowColWeight W[],int e)
 }
 
 
-
-
 void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
+/*带权图G从下标0顶点到其它顶点的最短距离distance*/
+/*和最短路径上顶点前驱下标path*/
 { 
 	int n = G->vertices.size;
-	int *S = (int *)malloc(sizeof(int)*n); //S数组
+	int *S = (int *)malloc(sizeof(int)*n);
 	int minDis, i, j, u;
     	FILE *fp;  
-	/*初始化*/
+	//初始化
 	for(i = 0; i < n; i ++)
 	{ 
 		distance[i] = G->edge[v0][i];
@@ -183,6 +191,7 @@ void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
 		else path[i] = -1;
 	}
 	S[v0] = 1;
+	/*在当前还未找到最短路径的顶点集中选取具有最短距离的顶点u*/
 	for(i = 1; i < n; i ++)
 	{ 
 		minDis = MaxWeight;
@@ -192,8 +201,10 @@ void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
 				u = j;
 				minDis = distance[j];
 			}
+			/*当已不再存在路径时算法结束*/
 			if(minDis == MaxWeight) return;
-			S[u] = 1; 
+			S[u] = 1; /*标记顶点u已从集合T加入到集合S中*/
+			/*修改从v0到其它顶点的最短距离和最短路径*/
 			for(j = 0; j < n; j++)
 				if(S[j] == 0 && G->edge[u][j] < MaxWeight &&
 					distance[u] + G->edge[u][j] < distance[j])

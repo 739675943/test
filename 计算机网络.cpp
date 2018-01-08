@@ -91,8 +91,8 @@ void Insertedge()
 int main()
 {
 	int i,j,k;
-	FILE *fp;           //读入文  
-        printf("我的名字是。。。");
+	FILE *fp;           //读入文件
+        printf("我的名字是");
 	fp=fopen("tuoputu10.txt","r");
 
 	fscanf(fp,"%d",&i);
