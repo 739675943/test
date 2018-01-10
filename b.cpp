@@ -62,7 +62,27 @@ void DeleteEdge(AdjMGraph *G,int v1,int v2)
 	
 }
 
-
+/* 在带权有向图G中插入一条第v1个顶点指向第v2个顶点，权值为weight的有向边。 
+* 如果v1和v2有一个不是图中的顶点，则图不变；如果v1和v2相等，则图不变。
+* 如果图已经包含该边，则边的权值更改为新的权值，时间复杂度:O(1)。
+上面插入的是有向边，我们插入无向边的时候可以进行两次的有向边的插入。
+*/
+void InsertEdge(AdjMGraph *G,int v1,int v2,int weight)
+{
+	DataType x;
+	if(v1!=v2)
+	{
+		if((ListGet(G->vertices,v1,&x)==0)||(ListGet(G->vertices,v2,&x)==0))
+		{
+			printf("插入边时参数v1和v2越界出错！\n");
+			exit(1);
+		}
+		
+		G->edge[v1][v2]=weight;
+		G->edge[v2][v1]=weight;
+		G->numOfEdges++;
+	}
+}
 
 
 
@@ -142,6 +162,8 @@ void CreatGraph(AdjMGraph *G,DataType v[],int n,RowColWeight W[],int e)
 			//cout<<n<<endl;
 			InsertVertex(G,v[i]);
 	}
+	for(k=0;k<e;k++)
+        InsertEdge(G,W[k].row,W[k].col,W[k].weight);
 }
 void Dijkstra(AdjMGraph *G, int v0, int distance[], int path[ ])
 /*带权图G从下标0顶点到其它顶点的最短距离distance
