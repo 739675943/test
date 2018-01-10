@@ -1,14 +1,20 @@
-typedef struct
-{
-	DataType list[MaxSize] ;
-	int size ;
-}SeqList;
-//初始化顺序表
+#include "b.h"
+#include <stdlib.h>
+#include <malloc.h>
+#include<windows.h>
+#include<stdio.h>
+#include<string.h>
+#include<conio.h>
+typedef int DataType;
+#define MaxSize 10
+#define MaxVertices 10
+#define MaxWeight 10000
+
+
 void ListInitiate(SeqList *L)    //初始化顺序表L
 {
 	L->size = 0;
 }
-
 //函数作用：求当前元素个数
 int ListLength(SeqList L)       // 返回顺序表L的当前数据元素个数
 {

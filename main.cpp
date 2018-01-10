@@ -8,11 +8,13 @@ typedef int DataType;
 #define MaxSize 10
 #define MaxVertices 10
 #define MaxWeight 10000
-#include "AdjMGraph.h"
+#include "b.h"
 	AdjMGraph g1;
 		int a[MaxSize];
     RowColWeight rcw[100];
 //主函数
+	
+
 
 void menu()
 {
@@ -26,21 +28,21 @@ void menu()
    printf("                     1.查看路由表                        \n");
    printf("                     2.删除节点                          \n");
    printf("                     3.删除边                            \n");
-   printf("                     4.填加边                            \n");
-   printf("                     5.退出系统                          \n");
-   printf("                     请输入你的选择（1~5）               \n");
+   printf("                     4.退出系统                          \n");
+   printf("                     请输入你的选择（1~4）               \n");
    scanf("%d",&p);
-    if(p<1||p>5)
-	{printf("\n\n输入序号不属于菜单，请重新输入\n\n");
-	p=6;}
+    if(p<1||p>4)
+	{
+		printf("\n\n输入序号不属于菜单，请重新输入\n\n");
+		p=5;
+	}
 	switch(p)
 	{
 	 case 1:putList();break;      //路由表输出并打印
      case 2:Deletevertex();break;   //删除节点
      case 3:Deleteedge();break;   //删除边
-	 case 4:Insertedge();break;
-	 case 5:exit(0);break;      //退出
-	 case 6:menu();
+	 case 4:exit(0);break;      //退出
+	 case 5:menu();
 	}
 }
 
@@ -79,15 +81,6 @@ void Deleteedge()
 }
 
 
-void Insertedge()
-{
-    int i,j,w;
-    printf("请输入你要删除的边的两个顶点和其权直v1,v2,w\n");
-	scanf("%d%d%d",&i,&j,&w);
-	InsertEdge(&g1,i-1,j-1,w);
-	menu();
-}
-
 int main()
 {
 	int i,j,k;
@@ -107,5 +100,5 @@ int main()
 	GraphInitiate(&g1);
     CreatGraph(&g1,a,i,rcw,j);
 	menu();
-
+    return 0;
 }
